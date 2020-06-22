@@ -7,8 +7,8 @@ namespace Streams.Tests
     [TestFixture]
     public class StreamsExtensionTests
     {
-        private const string sourcePath = @"SourceText.txt";
-        private const string destinationPath = @"DestinationText.txt";
+        private const string sourcePath = "SourceText.txt";
+        private const string destinationPath = "DestinationText.txt";
         
         [Test]
         public void ByByteCopyTests()
