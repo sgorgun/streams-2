@@ -1,13 +1,13 @@
 # Task Description
 
-- Ad implementations to static methods
+- Add implementations to static methods
     - ByByteCopy
     - InMemoryByByteCopy
     - ByBlockCopy
     - InMemoryByBlockCopy
     - BufferedCopy
     - ByLineCopy  
-  class [StreamsExtension](https://gitlab.com/AnzhelikaKravchuk/streams/-/blob/master/Streams/StreamsExtension.cs). See TODO comments there.
+of the class [StreamsExtension](https://gitlab.com/AnzhelikaKravchuk/streams/-/blob/master/Streams/StreamsExtension.cs). See TODO comments there.
 - Build a solution in Visual Studio. Make sure there are no compiler errors and warnings, fix these issues and rebuild the solution.
 - Run all unit tests with Visual Studio and make sure there are no failed unit tests. Fix your code to make all tests GREEN.
 - Review all your changes in the codebase before staging the changes and creating a commit.
