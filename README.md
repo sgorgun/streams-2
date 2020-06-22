@@ -2,11 +2,12 @@
 
 - Add implementations to static methods
     - ByteCopyWithFileStream
-    - ByteCopyWithMemoryStream
     - BlockCopyWithFileStream
-    - BlockCopyWithMemoryStream
     - BlockCopyWithBufferedStream
     - LineCopy   
+    - ReadEncodedText
+    - DecompressStream
+    - CalculateHash
 of the class [StreamsExtension](https://gitlab.com/AnzhelikaKravchuk/streams/-/blob/master/Streams/StreamsExtension.cs). See TODO comments there.
 - Build a solution in Visual Studio. Make sure there are no compiler errors and warnings, fix these issues and rebuild the solution.
 - Run all unit tests with Visual Studio and make sure there are no failed unit tests. Fix your code to make all tests GREEN.
@@ -23,3 +24,6 @@ of the class [StreamsExtension](https://gitlab.com/AnzhelikaKravchuk/streams/-/b
     - [StreamReader Clas](https://docs.microsoft.com/en-us/dotnet/api/system.io.streamreader?view=netcore-3.1)
     - [StreamWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=netcore-3.1)
     - [Encoding Class](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding?view=netcore-3.1)
+    - [DeflateStream Class](https://docs.microsoft.com/en-us/dotnet/api/system.io.compression.deflatestream?view=netcore-3.1)
+    - [GZipStream Class](https://docs.microsoft.com/en-us/dotnet/api/system.io.compression.gzipstream?view=netcore-3.1)
+    - [HashAlgorithm Class](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netcore-3.1)
