@@ -7,97 +7,187 @@ namespace Streams
     public static class StreamsExtension
     {
         #region Public members
-        
-        #region TODO: Implement by byte copy logic using class FileStream as a backing store stream.
-        
+
+        #region TODO: Implement by byte copy logic using class FileStream as a backing store stream .
+
         public static int ByByteCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-        
-            throw new NotImplementedException();
+            using FileStream reader = new FileStream(sourcePath, FileMode.Open, FileAccess.Read);
+            using FileStream writer = File.OpenWrite(destinationPath);
+
+            long length = reader.Length;
+            int buffer;
+            int counter = 0;
+            while (length-- != 0)
+            {
+                buffer = reader.ReadByte();
+                if (buffer != -1)
+                {
+                    writer.WriteByte((byte)buffer);
+                    counter++;
+                }
+            }
+
+            return counter;
         }
-        
+
         #endregion
-        
+
         #region TODO: Implement by byte copy logic using class MemoryStream as a backing store stream.
-        
+
         public static int InMemoryByByteCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-        
-            // TODO: step 1. Use StreamReader to read entire file in string
-        
-            // TODO: step 2. Create byte array on base string content - use  System.Text.Encoding class
-        
-            // TODO: step 3. Use MemoryStream instance to read from byte array (from step 2)
-        
-            // TODO: step 4. Use MemoryStream instance (from step 3) to write it content in new byte array
-        
-            // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
-        
-            // TODO: step 6. Use StreamWriter here to write char array content in new file
-        
-            throw new NotImplementedException();
+            using StreamReader reader = new StreamReader(sourcePath, Encoding.UTF8);
+            string readedText = reader.ReadToEnd();
+            byte[] sourceBuffer = Encoding.UTF8.GetBytes(readedText);
+            MemoryStream source = new MemoryStream();
+            foreach (var item in sourceBuffer)
+            {
+                source.WriteByte(item);
+            }
+
+            source.Seek(0, SeekOrigin.Begin);
+            byte[] destinationBuffer = new byte[source.Length];
+            for (int i = 0; i < source.Length; i++)
+            {
+                destinationBuffer[i] = (byte)source.ReadByte();
+            }
+
+            string result = Encoding.UTF8.GetString(destinationBuffer);
+            using StreamWriter writer = new StreamWriter(destinationPath, false, Encoding.UTF8);
+            writer.Write(result);
+            return destinationBuffer.Length;
         }
-        
+
         #endregion
-        
+
         #region TODO: Implement by block copy logic using FileStream buffer.
-        
+
         public static int ByBlockCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-        
-            // TODO: Use Fil method's approach
-            
-            throw new NotImplementedException();
+            using var reader = File.OpenRead(sourcePath);
+            using var writer = new FileStream(destinationPath, FileMode.Create, FileAccess.Write);
+            int bufferSize = 512;
+            byte[] buffer = new byte[bufferSize];
+            int bytesCountForRead = bufferSize;
+            int reminder = (int)reader.Length;
+            while (reminder != 0)
+            {
+                if (reminder < bytesCountForRead)
+                {
+                    bytesCountForRead = reminder;
+                }
+                reminder -= reader.Read(buffer, 0, bytesCountForRead);
+                writer.Write(buffer, 0, bytesCountForRead);
+            }
+
+            return (int)writer.Length;
         }
-        
+
         #endregion
-        
+
         #region TODO: Implement by block copy logic using MemoryStream.
-        
+
         public static int InMemoryByBlockCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-        
-            // TODO: Use InMemoryByByteCopy method's approach
-            
-            // TODO: step 1. Use StreamReader to read entire file in string
-            
-            // TODO: step 2. Create byte array on base string content - use  System.Text.Encoding class
-            
-            // TODO: step 4. Use MemoryStream instance (from step 3) to write it content in new byte array
-            
-            // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
-            
-            // TODO: step 6. Use StreamWriter here to write char array content in new file
-        
-            throw new NotImplementedException();
+            using StreamReader reader = new StreamReader(sourcePath, Encoding.UTF8);
+            string readedText = reader.ReadToEnd();
+
+            byte[] sourceBuffer = Encoding.UTF8.GetBytes(readedText);
+            int bufferSize = 512;
+            byte[] buffer = new byte[bufferSize];
+            using MemoryStream source = new MemoryStream();
+            var builder = new StringBuilder();
+            int bytesCountForRead = bufferSize;
+            int reminder = (int)sourceBuffer.Length;
+            int offset = 0;
+
+            while (reminder != 0)
+            {
+                if (reminder < bytesCountForRead)
+                {
+                    bytesCountForRead = reminder;
+                }
+
+                source.Write(sourceBuffer, offset, bytesCountForRead);
+                source.Position = 0;
+                source.Read(buffer, 0, bytesCountForRead);
+                builder.Append(Encoding.UTF8.GetChars(buffer, 0, bytesCountForRead));
+                reminder -= bytesCountForRead;
+                offset += bytesCountForRead;
+                source.Position = 0;
+            }
+
+            string result = builder.ToString();
+            using StreamWriter writer = new StreamWriter(destinationPath, false, Encoding.UTF8);
+            writer.Write(result);
+            return offset;
         }
-        
+
         #endregion
-        
+
         #region TODO: Implement by block copy logic using class-decorator BufferedStream.
-        
+
         public static int BufferedCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-        
-            throw new NotImplementedException();
+            int bufferSize = 512;
+            using var reader = File.OpenRead(sourcePath);
+            using BufferedStream bufferedReader = new BufferedStream(reader, bufferSize);
+            using var writer = File.OpenWrite(destinationPath);
+            using BufferedStream bufferedWriter = new BufferedStream(writer, bufferSize);
+
+            byte[] buffer = new byte[bufferSize];
+            int bytesReadedCount = 0;
+            int totalBytesCount = 0;
+            do
+            {
+                bytesReadedCount = bufferedReader.Read(buffer, 0, bufferSize);
+                bufferedWriter.Write(buffer, 0, bytesReadedCount);
+                totalBytesCount += bytesReadedCount;
+            } while (bytesReadedCount == buffer.Length);
+
+            return totalBytesCount;
         }
-        
+
         #endregion
-        
+
         #region TODO: Implement by line copy logic using FileStream and classes text-adapters StreamReader/StreamWriter
-        
+
         public static int ByLineCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-        
-            throw new NotImplementedException();
+            using var reader = new StreamReader(sourcePath, Encoding.UTF8);
+            using var writer = new StreamWriter(destinationPath, false, Encoding.UTF8);
+            int counter = 0;
+            string result;
+            writer.NewLine = "\u000A";//КОСТЫЛЬ!!!!
+
+            do
+            {
+                result = reader.ReadLine();
+                if (!reader.EndOfStream)
+                {
+                    writer.WriteLine(result);
+                    counter++;
+                }
+                else
+                {
+                    writer.Write(result);
+                    counter++;
+                }
+            }
+            while (!reader.EndOfStream);
+
+            return counter;
         }
-        
+
+        #endregion
+
         #endregion
         
         #endregion
