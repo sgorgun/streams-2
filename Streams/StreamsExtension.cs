@@ -3,13 +3,6 @@ using System.IO;
 
 namespace Streams
 {
-    // C# 8.0 in a Nutshell. Joseph Albahari, Eric Johannsen, Ben Albahari (previous editions). O'Reilly Media; April 2020
-    // Chapter 15: Streams and I/O
-    // http://www.albahari.com/nutshell/E8-CH15.aspx
-    // C# 8.0 in a Nutshell. Joseph Albahari, Eric Johannsen, Ben Albahari (previous editions). O'Reilly Media; April 2020
-    // Chapter 8: Framework Fundamentals - Text Encodings and Unicode. 
-    // https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding?view=netcore-3.1
-    // https://docs.microsoft.com/en-us/dotnet/api/system.io?view=netcore-3.1
 
     public static class StreamsExtension
     {
@@ -111,8 +104,6 @@ namespace Streams
 
         #region Private members
 
-        #region TODO: Implement validation logic
-
         private static void InputValidation(string sourcePath, string destinationPath)
         {
             if (string.IsNullOrEmpty(sourcePath))
@@ -132,8 +123,6 @@ namespace Streams
                     $"File '{sourcePath}' not found. Parameter name: {nameof(sourcePath)}.");
             }
         }
-
-        #endregion
 
         #endregion
     }
