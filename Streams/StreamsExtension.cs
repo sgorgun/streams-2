@@ -11,19 +11,21 @@ namespace Streams
         public static int ByByteCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-            using FileStream reader = new FileStream(sourcePath, FileMode.Open, FileAccess.Read);
-            using FileStream writer = File.OpenWrite(destinationPath);
-
-            long length = reader.Length;
-            int buffer;
             int counter = 0;
-            while (length-- != 0)
+            using (var reader = new FileStream(sourcePath, FileMode.Open, FileAccess.Read))
+            using (FileStream writer = File.OpenWrite(destinationPath))
             {
-                buffer = reader.ReadByte();
-                if (buffer != -1)
+                long length = reader.Length;
+                int buffer;
+
+                while (length-- != 0)
                 {
-                    writer.WriteByte((byte)buffer);
-                    counter++;
+                    buffer = reader.ReadByte();
+                    if (buffer != -1)
+                    {
+                        writer.WriteByte((byte) buffer);
+                        counter++;
+                    }
                 }
             }
 
@@ -89,7 +91,7 @@ namespace Streams
             using MemoryStream source = new MemoryStream();
             var builder = new StringBuilder();
             int bytesCountForRead = bufferSize;
-            int reminder = (int)sourceBuffer.Length;
+            int reminder = sourceBuffer.Length;
             int offset = 0;
 
             while (reminder != 0)
@@ -118,21 +120,22 @@ namespace Streams
         {
             InputValidation(sourcePath, destinationPath);
             int bufferSize = 512;
-            using var reader = File.OpenRead(sourcePath);
-            using BufferedStream bufferedReader = new BufferedStream(reader, bufferSize);
-            using var writer = File.OpenWrite(destinationPath);
-            using BufferedStream bufferedWriter = new BufferedStream(writer, bufferSize);
-
-            byte[] buffer = new byte[bufferSize];
-            int bytesReadedCount = 0;
             int totalBytesCount = 0;
-            do
+            using (var reader = File.OpenRead(sourcePath))
+            using (BufferedStream bufferedReader = new BufferedStream(reader, bufferSize))
+            using (var writer = File.OpenWrite(destinationPath))
+            using (BufferedStream bufferedWriter = new BufferedStream(writer, bufferSize))
             {
-                bytesReadedCount = bufferedReader.Read(buffer, 0, bufferSize);
-                bufferedWriter.Write(buffer, 0, bytesReadedCount);
-                totalBytesCount += bytesReadedCount;
-            } while (bytesReadedCount == buffer.Length);
+                byte[] buffer = new byte[bufferSize];
+                int bytesReadedCount = 0;
 
+                do
+                {
+                    bytesReadedCount = bufferedReader.Read(buffer, 0, bufferSize);
+                    bufferedWriter.Write(buffer, 0, bytesReadedCount);
+                    totalBytesCount += bytesReadedCount;
+                } while (bytesReadedCount == buffer.Length);
+            }
             return totalBytesCount;
         }
 
