@@ -8,7 +8,7 @@
     - ReadEncodedText
     - DecompressStream
     - CalculateHash    
-The task detail definitions are given in the  XML-comments for the methods.
+The task detail definitions are given in the XML-comments for the methods.
 - Build a solution in Visual Studio. Make sure there are no compiler errors and warnings, fix these issues and rebuild the solution.
 - Run all unit tests with Visual Studio and make sure there are no failed unit tests. Fix your code to make all tests GREEN.
 - Review all your changes in the codebase before staging the changes and creating a commit.
