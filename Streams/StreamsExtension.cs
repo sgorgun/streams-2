@@ -6,7 +6,6 @@ namespace Streams
 
     public static class StreamsExtension
     {
-        // TODO: Implement by byte copy logic using class FileStream as a backing store stream .
 
         public static int ByByteCopy(string sourcePath, string destinationPath)
         {
@@ -29,8 +28,6 @@ namespace Streams
 
             return counter;
         }
-
-        // TODO: Implement by byte copy logic using class MemoryStream as a backing store stream.
 
         public static int InMemoryByByteCopy(string sourcePath, string destinationPath)
         {
@@ -57,8 +54,6 @@ namespace Streams
             return destinationBuffer.Length;
         }
 
-        // TODO: Implement by block copy logic using FileStream buffer.
-
         public static int ByBlockCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
@@ -80,8 +75,6 @@ namespace Streams
 
             return (int)writer.Length;
         }
-
-        // TODO: Implement by block copy logic using MemoryStream.
 
         public static int InMemoryByBlockCopy(string sourcePath, string destinationPath)
         {
@@ -120,8 +113,6 @@ namespace Streams
             return offset;
         }
 
-        // TODO: Implement by block copy logic using class-decorator BufferedStream.
-
         public static int BufferedCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
@@ -143,8 +134,6 @@ namespace Streams
 
             return totalBytesCount;
         }
-
-        // TODO: Implement by line copy logic using FileStream and classes text-adapters StreamReader/StreamWriter
 
         public static int ByLineCopy(string sourcePath, string destinationPath)
         {
