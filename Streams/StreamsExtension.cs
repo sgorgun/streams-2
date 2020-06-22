@@ -1,97 +1,141 @@
 using System;
 using System.IO;
+using System.Net;
 
 namespace Streams
 {
     public static class StreamsExtension
     {
-        // TODO: Implement by byte copy logic using class FileStream as a backing store stream.
-        public static int ByByteCopy(string sourcePath, string destinationPath)
+        /// <summary>
+        /// Implements the logic of byte copying the contents of the source text file using class FileStream as a backing store stream.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int ByteCopyWithFileStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+            
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// Implements the logic of block copying the contents of the source text file using FileStream buffer.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int BlockCopyWithFileStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+            
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// Implements the logic of block copying the contents of the source text file using FileStream and class-decorator BufferedStream.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int BlockCopyWithBufferedStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// Implements the logic of line-by-line copying of the contents of the source text file
+        /// using FileStream and classes-adapters  StreamReader/StreamWriter
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded lines.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file are null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int LineCopy(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
 
             throw new NotImplementedException();
         }
 
-        // TODO: Implement by byte copy logic using class MemoryStream as a backing store stream.
-        public static int InMemoryByByteCopy(string sourcePath, string destinationPath)
+        /// <summary>
+        /// Reads file content encoded with non Unicode encoding.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="encoding">Encoding name.</param>
+        /// <returns>Unicoded file content.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or encoding string is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static string ReadEncodedText(string sourcePath, string encoding)
         {
-            InputValidation(sourcePath, destinationPath);
-
-            // TODO: step 1. Use StreamReader to read entire file in string
-
-            // TODO: step 2. Create byte array on base string content - use  System.Text.Encoding class
-
-            // TODO: step 3. Use MemoryStream instance to read from byte array (from step 2)
-
-            // TODO: step 4. Use MemoryStream instance (from step 3) to write it content in new byte array
-
-            // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
-
-            // TODO: step 6. Use StreamWriter here to write char array content in new file
+            InputValidation(sourcePath);
 
             throw new NotImplementedException();
         }
 
-        // TODO: Implement by block copy logic using FileStream buffer.
-        public static int ByBlockCopy(string sourcePath, string destinationPath)
+        /// <summary>
+        /// Returns decompressed stream from file. 
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="method">Method used for compression (none, deflate, gzip).</param>
+        /// <returns>Output stream.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static Stream DecompressStream(string sourcePath, DecompressionMethods method)
         {
-            InputValidation(sourcePath, destinationPath);
-
-            // TODO: Use Fil method's approach
+            InputValidation(sourcePath);
 
             throw new NotImplementedException();
         }
-
-        // TODO: Implement by block copy logic using MemoryStream.
-        public static int InMemoryByBlockCopy(string sourcePath, string destinationPath)
+        
+        /// <summary>
+        /// Calculates hash of stream using specified algorithm.
+        /// </summary>
+        /// <param name="stream">Source stream.</param>
+        /// <param name="hashAlgorithmName">
+        ///     Hash algorithm ("MD5","SHA1","SHA256" and other supported by .NET).
+        /// </param>
+        /// <returns>Hash.</returns>
+        public static string CalculateHash(this Stream stream, string hashAlgorithmName)
         {
-            InputValidation(sourcePath, destinationPath);
-
-            // TODO: Use InMemoryByByteCopy method's approach
-
-            // TODO: step 1. Use StreamReader to read entire file in string
-
-            // TODO: step 2. Create byte array on base string content - use  System.Text.Encoding class
-
-            // TODO: step 4. Use MemoryStream instance (from step 3) to write it content in new byte array
-
-            // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
-
-            // TODO: step 6. Use StreamWriter here to write char array content in new file
-
             throw new NotImplementedException();
         }
-
-        // TODO: Implement by block copy logic using class-decorator BufferedStream.
-        public static int BufferedCopy(string sourcePath, string destinationPath)
-        {
-            InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
-        }
-
-        // TODO: Implement by line copy logic using FileStream and classes text-adapters StreamReader/StreamWriter
-        public static int ByLineCopy(string sourcePath, string destinationPath)
-        {
-            InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
-        }
-
+        
         private static void InputValidation(string sourcePath, string destinationPath)
         {
-            if (string.IsNullOrEmpty(sourcePath))
+            if (string.IsNullOrWhiteSpace(sourcePath))
             {
-                throw new ArgumentException($"{nameof(sourcePath)} cannot be null or empty", nameof(sourcePath));
+                throw new ArgumentException($"{nameof(sourcePath)} cannot be null or empty or whitespace.", nameof(sourcePath));
+            }
+            
+            if (!File.Exists(sourcePath))
+            {
+                throw new FileNotFoundException($"File '{sourcePath}' not found. Parameter name: {nameof(sourcePath)}.");
             }
 
-            if (string.IsNullOrEmpty(destinationPath))
+            if (string.IsNullOrWhiteSpace(destinationPath))
             {
-                throw new ArgumentException($"{nameof(destinationPath)} cannot be null or empty",
+                throw new ArgumentException($"{nameof(destinationPath)} cannot be null or empty or whitespace",
                     nameof(destinationPath));
             }
-
+        }
+        
+        private static void InputValidation(string sourcePath)
+        {
+            if (string.IsNullOrWhiteSpace(sourcePath))
+            {
+                throw new ArgumentException($"{nameof(sourcePath)} cannot be null or empty or whitespace.", nameof(sourcePath));
+            }
+            
             if (!File.Exists(sourcePath))
             {
                 throw new FileNotFoundException($"File '{sourcePath}' not found. Parameter name: {nameof(sourcePath)}.");
