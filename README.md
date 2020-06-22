@@ -6,7 +6,7 @@
     - BlockCopyWithFileStream
     - BlockCopyWithMemoryStream
     - BlockCopyWithBufferedStream
-    - LineCopy
+    - LineCopy   
 of the class [StreamsExtension](https://gitlab.com/AnzhelikaKravchuk/streams/-/blob/master/Streams/StreamsExtension.cs). See TODO comments there.
 - Build a solution in Visual Studio. Make sure there are no compiler errors and warnings, fix these issues and rebuild the solution.
 - Run all unit tests with Visual Studio and make sure there are no failed unit tests. Fix your code to make all tests GREEN.
