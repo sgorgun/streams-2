@@ -13,3 +13,11 @@
 - Review all your changes in the codebase before staging the changes and creating a commit.
 - Stage your changes, create a commit and publish your changes to the remote repository.
 
+## See also
+- .NET API. Microsoft Documentation
+    - [FileStream Class](https://docs.microsoft.com/en-us/dotnet/api/system.io.filestream?view=netcore-3.1)
+    - [MemoryStream Class](https://docs.microsoft.com/en-us/dotnet/api/system.io.memorystream?view=netcore-3.1)
+    - [BufferedStream Class](https://docs.microsoft.com/en-us/dotnet/api/system.io.bufferedstream?view=netcore-3.1)
+    - [StreamReader Clas](https://docs.microsoft.com/en-us/dotnet/api/system.io.streamreader?view=netcore-3.1)
+    - [StreamWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=netcore-3.1)
+    - [Encoding Class](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding?view=netcore-3.1)
