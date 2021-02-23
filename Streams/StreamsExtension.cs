@@ -37,6 +37,33 @@ namespace Streams
         }
         
         /// <summary>
+        /// Implements the logic of byte copying the contents of the source text file using MemoryStream.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int ByteCopyWithMemoryStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+
+            // TODO: step 1. Use StreamReader to read entire file in string
+
+            // TODO: step 2. Create byte array on base string content - use  System.Text.Encoding class
+
+            // TODO: step 3. Use MemoryStream instance to read from byte array (from step 2)
+
+            // TODO: step 4. Use MemoryStream instance (from step 3) to write it content in new byte array
+
+            // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
+
+            // TODO: step 6. Use StreamWriter here to write char array content in new file
+            
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
         /// Implements the logic of block copying the contents of the source text file using FileStream and class-decorator BufferedStream.
         /// </summary>
         /// <param name="sourcePath">Path to source file.</param>
@@ -48,6 +75,21 @@ namespace Streams
         {
             InputValidation(sourcePath, destinationPath);
 
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// Implements the logic of block copying the contents of the source text file using MemoryStream.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int BlockCopyWithMemoryStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+            
             throw new NotImplementedException();
         }
         
@@ -66,7 +108,20 @@ namespace Streams
 
             throw new NotImplementedException();
         }
-
+        
+        /// <summary>
+        /// Implements the logic of block copying from provided link.
+        /// </summary>
+        /// <param name="link">URI specified as string from which to copy.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>Number of copied bytes.</returns>
+        public static int DownloadByBlock(string link, string destinationPath)
+        {
+            //TODO: Use WebClient class
+            
+            throw new NotImplementedException();
+        }
+        
         /// <summary>
         /// Reads file content encoded with non Unicode encoding.
         /// </summary>
