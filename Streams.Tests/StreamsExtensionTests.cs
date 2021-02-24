@@ -16,8 +16,8 @@ namespace Streams.Tests
         private const string DestinationPath = "DestinationText.txt";
         private const string EncodedFileName = "german_ISO-8859-1.txt";
         private const string FileName = "Planets.xlsx";
-        private const string SourceForLink = "Canvas.txt";
-        private const string DestinationForLink = "CanvasUpload.txt";
+        //private const string SourceForLink = "Canvas.txt";
+        //private const string DestinationForLink = "CanvasUpload.txt";
 
         [Test]
         public void ByteCopyWithFileStreamTests()
@@ -97,15 +97,15 @@ namespace Streams.Tests
             Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
         }
         
-        [TestCase("https://canvas.instructure.com/courses/2448044/files/folder/Course%20Content/Documents?preview=127995834")]
-        public void DownloadByBlockTest(string link)
-        {
-            DownloadByBlock(link, DestinationForLink);
-            
-            CheckFileIsClosed(DestinationForLink);
-                
-            Assert.IsTrue(AreEqualByLength(SourceForLink, DestinationForLink));
-        }
+        //[TestCase("https://canvas.instructure.com/courses/2448044/files/folder/Course%20Content/Documents?preview=127995834")]
+        //public void DownloadByBlockTest(string link)
+        //{
+        //    DownloadByBlock(link, DestinationForLink);
+        //    
+        //    CheckFileIsClosed(DestinationForLink);
+        //        
+        //    Assert.IsTrue(AreEqualByLength(SourceForLink, DestinationForLink));
+        //}
 
         [Test]
         public void ReadEncodedText_ConvertTextUsingSpecifiedEncoding()
