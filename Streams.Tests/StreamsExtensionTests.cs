@@ -146,7 +146,7 @@ namespace Streams.Tests
                     using var memStream = new MemoryStream();
                     stream.CopyTo(memStream);
                     Assert.IsTrue(expected.SequenceEqual(memStream.ToArray()),
-                        "DecompressStream failed for {data.Value}");
+                        $"DecompressStream failed for {data.Value}");
                 }
 
                 CheckFileIsClosed(data.Key);
