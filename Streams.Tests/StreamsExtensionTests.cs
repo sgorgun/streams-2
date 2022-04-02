@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using static Streams.StreamsExtension;
 
@@ -12,100 +13,96 @@ namespace Streams.Tests
     [TestFixture]
     public class StreamsExtensionTests
     {
-        private const string SourcePath = "SourceText.txt";
-        private const string DestinationPath = "DestinationText.txt";
-        private const string EncodedFileName = "german_ISO-8859-1.txt";
-        private const string FileName = "Planets.xlsx";
-        //private const string SourceForLink = "Canvas.txt";
-        //private const string DestinationForLink = "CanvasUpload.txt";
+        private FilesInfo filesInfo;
+
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            this.filesInfo = new FilesInfo();
+            configuration.GetSection(nameof(FilesInfo)).Bind(this.filesInfo);
+        }
 
         [Test]
         public void ByteCopyWithFileStreamTests()
         {
-            ByteCopyWithFileStream(SourcePath, DestinationPath);
+            ByteCopyWithFileStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            CheckFileIsClosed(SourcePath);
-            CheckFileIsClosed(DestinationPath);
+            this.CheckFileIsClosed(this.filesInfo.SourcePath);
+            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(AreEqualByLength(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByContent(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
+            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
         public void BlockCopyWithFileStreamTests()
         {
-            BlockCopyWithFileStream(SourcePath, DestinationPath);
+            BlockCopyWithFileStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            CheckFileIsClosed(SourcePath);
-            CheckFileIsClosed(DestinationPath);
+            this.CheckFileIsClosed(this.filesInfo.SourcePath);
+            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(AreEqualByLength(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByContent(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
+            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
         public void BlockCopyWithBufferedStreamTests()
         {
-            BlockCopyWithBufferedStream(SourcePath, DestinationPath);
+            BlockCopyWithBufferedStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            CheckFileIsClosed(SourcePath);
-            CheckFileIsClosed(DestinationPath);
+            this.CheckFileIsClosed(this.filesInfo.SourcePath);
+            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(AreEqualByLength(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByContent(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
+            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
         public void ByteCopyWithMemoryStreamTests()
         {
-            ByteCopyWithMemoryStream(SourcePath, DestinationPath);
+            ByteCopyWithMemoryStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            CheckFileIsClosed(SourcePath);
-            CheckFileIsClosed(DestinationPath);
+            this.CheckFileIsClosed(this.filesInfo.SourcePath);
+            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(AreEqualByLength(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByContent(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
+            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
-        
+
         [Test]
         public void BlockCopyWithMemoryStreamTests()
         {
-            BlockCopyWithMemoryStream(SourcePath, DestinationPath);
+            BlockCopyWithMemoryStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            CheckFileIsClosed(SourcePath);
-            CheckFileIsClosed(DestinationPath);
+            this.CheckFileIsClosed(this.filesInfo.SourcePath);
+            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(AreEqualByLength(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByContent(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
+            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
         public void LineCopyTests()
         {
-            LineCopy(SourcePath, DestinationPath);
+            LineCopy(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            CheckFileIsClosed(SourcePath);
-            CheckFileIsClosed(DestinationPath);
+            this.CheckFileIsClosed(this.filesInfo.SourcePath);
+            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(AreEqualByLength(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByContent(SourcePath, DestinationPath));
-            Assert.IsTrue(AreEqualByBytes(SourcePath, DestinationPath));
+            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
-        
-        //[TestCase("https://canvas.instructure.com/courses/2448044/files/folder/Course%20Content/Documents?preview=127995834")]
-        //public void DownloadByBlockTest(string link)
-        //{
-        //    DownloadByBlock(link, DestinationForLink);
-        //    
-        //    CheckFileIsClosed(DestinationForLink);
-        //        
-        //    Assert.IsTrue(AreEqualByLength(SourceForLink, DestinationForLink));
-        //}
 
         [Test]
         public void ReadEncodedText_ConvertTextUsingSpecifiedEncoding()
@@ -120,9 +117,9 @@ namespace Streams.Tests
                 "Gemessen am nominalen Bruttoinlandsprodukt ist Deutschland die größte Volkswirtschaft Europas und viertgrößte der Welt. " +
                 "Im Jahr 2011 war es die drittgrößte Export- und Importnation.[10] Der Index für menschliche Entwicklung zählt Deutschland zu den sehr hoch entwickelten Staaten";
 
-            var actual = ReadEncodedText(EncodedFileName, "ISO-8859-1");
+            var actual = ReadEncodedText(this.filesInfo.EncodedFileName, "ISO-8859-1");
 
-            CheckFileIsClosed(EncodedFileName);
+            this.CheckFileIsClosed(this.filesInfo.EncodedFileName);
 
             Assert.AreEqual(expected, actual);
         }
@@ -132,12 +129,12 @@ namespace Streams.Tests
         {
             var testData = new Dictionary<string, DecompressionMethods>
             {
-                {FileName, DecompressionMethods.None},
-                {FileName + ".deflate", DecompressionMethods.Deflate},
-                {FileName + ".gzip", DecompressionMethods.GZip}
+                { this.filesInfo.FileName, DecompressionMethods.None },
+                { this.filesInfo.FileName + ".deflate", DecompressionMethods.Deflate },
+                { this.filesInfo.FileName + ".gzip", DecompressionMethods.GZip }
             };
 
-            var expected = File.ReadAllBytes(FileName);
+            var expected = File.ReadAllBytes(this.filesInfo.FileName);
 
             foreach (var data in testData)
             {
@@ -145,11 +142,10 @@ namespace Streams.Tests
                 {
                     using var memStream = new MemoryStream();
                     stream.CopyTo(memStream);
-                    Assert.IsTrue(expected.SequenceEqual(memStream.ToArray()),
-                        $"DecompressStream failed for {data.Value}");
+                    Assert.IsTrue(expected.SequenceEqual(memStream.ToArray()), $"DecompressStream failed for {data.Value}");
                 }
 
-                CheckFileIsClosed(data.Key);
+                this.CheckFileIsClosed(data.Key);
             }
         }
 
@@ -158,20 +154,17 @@ namespace Streams.Tests
         {
             var testData = new Dictionary<string, string>
             {
-                {"MD5", "82E3C45273D90BC76489F194D1FA5CE1"},
-                {"System.Security.Cryptography.MD5", "82E3C45273D90BC76489F194D1FA5CE1"},
-
-                {"SHA", "30535A22D7995613F8613DA379ED0C89F8D7A280"},
-                {"SHA1", "30535A22D7995613F8613DA379ED0C89F8D7A280"},
-                {"System.Security.Cryptography.SHA1", "30535A22D7995613F8613DA379ED0C89F8D7A280"},
-
-                {"SHA256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F"},
-                {"SHA-256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F"},
+                { "MD5", "82E3C45273D90BC76489F194D1FA5CE1" },
+                { "System.Security.Cryptography.MD5", "82E3C45273D90BC76489F194D1FA5CE1" },
+                { "SHA", "30535A22D7995613F8613DA379ED0C89F8D7A280" },
+                { "SHA1", "30535A22D7995613F8613DA379ED0C89F8D7A280" },
+                { "System.Security.Cryptography.SHA1", "30535A22D7995613F8613DA379ED0C89F8D7A280" },
+                { "SHA256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F" },
+                { "SHA-256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F" },
                 {
                     "System.Security.Cryptography.SHA256",
                     "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F"
                 },
-
                 {
                     "SHA384",
                     "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67"
@@ -184,7 +177,6 @@ namespace Streams.Tests
                     "System.Security.Cryptography.SHA384",
                     "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67"
                 },
-
                 {
                     "SHA512",
                     "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2"
@@ -199,7 +191,7 @@ namespace Streams.Tests
                 }
             };
 
-            using var stream = File.OpenRead(FileName);
+            using var stream = File.OpenRead(this.filesInfo.FileName);
 
             foreach (var data in testData)
             {
