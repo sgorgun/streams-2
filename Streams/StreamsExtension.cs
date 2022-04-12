@@ -4,6 +4,9 @@ using System.Net;
 
 namespace Streams
 {
+    /// <summary>
+    /// Class for training streams and operations with it.
+    /// </summary>
     public static class StreamsExtension
     {
         /// <summary>
@@ -15,21 +18,6 @@ namespace Streams
         /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
         public static int ByteCopyWithFileStream(string? sourcePath, string? destinationPath)
-        {
-            InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Implements the logic of block copying the contents of the source text file using FileStream buffer.
-        /// </summary>
-        /// <param name="sourcePath">Path to source file.</param>
-        /// <param name="destinationPath">Path to destination file.</param>
-        /// <returns>The number of recorded bytes.</returns>
-        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
-        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
-        public static int BlockCopyWithFileStream(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
 
@@ -59,19 +47,18 @@ namespace Streams
             // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
 
             // TODO: step 6. Use StreamWriter here to write char array content in new file
-
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Implements the logic of block copying the contents of the source text file using FileStream and class-decorator BufferedStream.
+        /// Implements the logic of block copying the contents of the source text file using FileStream buffer.
         /// </summary>
         /// <param name="sourcePath">Path to source file.</param>
         /// <param name="destinationPath">Path to destination file.</param>
         /// <returns>The number of recorded bytes.</returns>
         /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
-        public static int BlockCopyWithBufferedStream(string? sourcePath, string? destinationPath)
+        public static int BlockCopyWithFileStream(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
 
@@ -94,6 +81,48 @@ namespace Streams
         }
 
         /// <summary>
+        /// Implements the logic of block copying the contents of the source text file using FileStream and class-decorator BufferedStream.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int BlockCopyWithBufferedStreamForFileStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Implements the logic of block copying the contents of the source text file using MemoryStream and class-decorator BufferedStream.
+        /// </summary>
+        /// <param name="sourcePath">Path to source file.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>The number of recorded bytes.</returns>
+        /// <exception cref="ArgumentException">Throw if path to source file or path to destination file is null or empty.</exception>
+        /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
+        public static int BlockCopyWithBufferedStreamForMemoryStream(string sourcePath, string destinationPath)
+        {
+            InputValidation(sourcePath, destinationPath);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Implements the logic of block copying from provided link.
+        /// </summary>
+        /// <param name="link">URI specified as string from which to copy.</param>
+        /// <param name="destinationPath">Path to destination file.</param>
+        /// <returns>Number of copied bytes.</returns>
+        public static int DownloadByBlock(string? link, string? destinationPath)
+        {
+            // TODO: Use WebClient.OpenRead method to create stream.
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Implements the logic of line-by-line copying of the contents of the source text file
         /// using FileStream and classes-adapters  StreamReader/StreamWriter
         /// </summary>
@@ -110,24 +139,11 @@ namespace Streams
         }
 
         /// <summary>
-        /// Implements the logic of block copying from provided link.
-        /// </summary>
-        /// <param name="link">URI specified as string from which to copy.</param>
-        /// <param name="destinationPath">Path to destination file.</param>
-        /// <returns>Number of copied bytes.</returns>
-        public static int DownloadByBlock(string? link, string? destinationPath)
-        {
-            //TODO: Use WebClient class
-
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Reads file content encoded with non Unicode encoding.
         /// </summary>
         /// <param name="sourcePath">Path to source file.</param>
         /// <param name="encoding">Encoding name.</param>
-        /// <returns>Unicoded file content.</returns>
+        /// <returns>Uncoding file content.</returns>
         /// <exception cref="ArgumentException">Throw if path to source file or encoding string is null or empty.</exception>
         /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
         public static string ReadEncodedText(string? sourcePath, string? encoding)
@@ -138,7 +154,7 @@ namespace Streams
         }
 
         /// <summary>
-        /// Returns decompressed stream from file. 
+        /// Returns decompressed stream from file.
         /// </summary>
         /// <param name="sourcePath">Path to source file.</param>
         /// <param name="method">Method used for compression (none, deflate, gzip).</param>

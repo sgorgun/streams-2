@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,38 +31,12 @@ namespace Streams.Tests
         {
             ByteCopyWithFileStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            this.CheckFileIsClosed(this.filesInfo.SourcePath);
-            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-        }
-
-        [Test]
-        public void BlockCopyWithFileStreamTests()
-        {
-            BlockCopyWithFileStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
-
-            this.CheckFileIsClosed(this.filesInfo.SourcePath);
-            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
-
-            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-        }
-
-        [Test]
-        public void BlockCopyWithBufferedStreamTests()
-        {
-            BlockCopyWithBufferedStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
-
-            this.CheckFileIsClosed(this.filesInfo.SourcePath);
-            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
-
-            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
@@ -70,12 +44,25 @@ namespace Streams.Tests
         {
             ByteCopyWithMemoryStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            this.CheckFileIsClosed(this.filesInfo.SourcePath);
-            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+        }
+
+        [Test]
+        public void BlockCopyWithFileStreamTests()
+        {
+            BlockCopyWithFileStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
+
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.DestinationPath);
+
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
@@ -83,12 +70,38 @@ namespace Streams.Tests
         {
             BlockCopyWithMemoryStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            this.CheckFileIsClosed(this.filesInfo.SourcePath);
-            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.SourcePath);
 
-            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+        }
+
+        [Test]
+        public void BlockCopyWithBufferedStreamForFileStreamTests()
+        {
+            BlockCopyWithBufferedStreamForFileStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
+
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.DestinationPath);
+
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+        }
+
+        [Test]
+        public void BlockCopyWithBufferedStreamForMemoryStreamTests()
+        {
+            BlockCopyWithBufferedStreamForMemoryStream(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
+
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
@@ -96,12 +109,12 @@ namespace Streams.Tests
         {
             LineCopy(this.filesInfo.SourcePath, this.filesInfo.DestinationPath);
 
-            this.CheckFileIsClosed(this.filesInfo.SourcePath);
-            this.CheckFileIsClosed(this.filesInfo.DestinationPath);
+            CheckFileIsClosed(this.filesInfo.SourcePath);
+            CheckFileIsClosed(this.filesInfo.DestinationPath);
 
-            Assert.IsTrue(this.AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
-            Assert.IsTrue(this.AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByLength(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByContent(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
+            Assert.IsTrue(AreEqualByBytes(this.filesInfo.SourcePath, this.filesInfo.DestinationPath));
         }
 
         [Test]
@@ -119,7 +132,7 @@ namespace Streams.Tests
 
             var actual = ReadEncodedText(this.filesInfo.EncodedFileName, "ISO-8859-1");
 
-            this.CheckFileIsClosed(this.filesInfo.EncodedFileName);
+            CheckFileIsClosed(this.filesInfo.EncodedFileName);
 
             Assert.AreEqual(expected, actual);
         }
@@ -130,8 +143,9 @@ namespace Streams.Tests
             var testData = new Dictionary<string, DecompressionMethods>
             {
                 { this.filesInfo.FileName, DecompressionMethods.None },
-                { this.filesInfo.FileName + ".deflate", DecompressionMethods.Deflate },
-                { this.filesInfo.FileName + ".gzip", DecompressionMethods.GZip }
+                { $"{this.filesInfo.FileName}.deflate", DecompressionMethods.Deflate },
+                { $"{this.filesInfo.FileName}.gzip", DecompressionMethods.GZip },
+                { $"{this.filesInfo.FileName}.brotli", DecompressionMethods.Brotli }
             };
 
             var expected = File.ReadAllBytes(this.filesInfo.FileName);
@@ -145,7 +159,7 @@ namespace Streams.Tests
                     Assert.IsTrue(expected.SequenceEqual(memStream.ToArray()), $"DecompressStream failed for {data.Value}");
                 }
 
-                this.CheckFileIsClosed(data.Key);
+                CheckFileIsClosed(data.Key);
             }
         }
 
@@ -156,39 +170,24 @@ namespace Streams.Tests
             {
                 { "MD5", "82E3C45273D90BC76489F194D1FA5CE1" },
                 { "System.Security.Cryptography.MD5", "82E3C45273D90BC76489F194D1FA5CE1" },
+
                 { "SHA", "30535A22D7995613F8613DA379ED0C89F8D7A280" },
                 { "SHA1", "30535A22D7995613F8613DA379ED0C89F8D7A280" },
                 { "System.Security.Cryptography.SHA1", "30535A22D7995613F8613DA379ED0C89F8D7A280" },
+
                 { "SHA256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F" },
                 { "SHA-256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F" },
-                {
-                    "System.Security.Cryptography.SHA256",
-                    "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F"
+                { "System.Security.Cryptography.SHA256", "62974B0251BA38179EE7D692A874694C67999B29EDC5CA068DA86626D160135F"
                 },
-                {
-                    "SHA384",
-                    "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67"
+
+                { "SHA384", "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67" },
+                { "SHA-384", "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67" },
+                { "System.Security.Cryptography.SHA384", "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67"
                 },
-                {
-                    "SHA-384",
-                    "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67"
-                },
-                {
-                    "System.Security.Cryptography.SHA384",
-                    "43ED7BCA7751DD7FFFF6D1BF528F917E75580A9CB0669A43AA01B943A30F2C36CAF672D8F42FD2EC7BD622FBE72F4D67"
-                },
-                {
-                    "SHA512",
-                    "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2"
-                },
-                {
-                    "SHA-512",
-                    "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2"
-                },
-                {
-                    "System.Security.Cryptography.SHA512",
-                    "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2"
-                }
+
+                { "SHA512", "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2" },
+                { "SHA-512", "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2" },
+                { "System.Security.Cryptography.SHA512", "6670401F8BE30A3EA179042C8F17773339EA0E0B7FAE671799D5460A6AE4BCC9A824C08317268B0A92A2A4846FD9D3D858297EAB63F549DE8154DE7A1557E8B2" }
             };
 
             using var stream = File.OpenRead(this.filesInfo.FileName);
@@ -208,14 +207,14 @@ namespace Streams.Tests
             Assert.Throws<ArgumentException>(() => Stream.Null.CalculateHash("Unrecognized!"));
         }
 
-        private bool AreEqualByLength(string source, string destination)
+        private static bool AreEqualByLength(string source, string destination)
         {
             var sourceFileInfo = new FileInfo(source);
             var destinationFileInfo = new FileInfo(destination);
             return sourceFileInfo.Length.Equals(destinationFileInfo.Length);
         }
 
-        private bool AreEqualByContent(string sourceFile, string destinationFile)
+        private static bool AreEqualByContent(string sourceFile, string destinationFile)
         {
             using var sourceReader = new StreamReader(sourceFile, Encoding.UTF8);
             string source = sourceReader.ReadToEnd();
@@ -223,10 +222,10 @@ namespace Streams.Tests
             using var destinationReader = new StreamReader(destinationFile, Encoding.UTF8);
             string destination = destinationReader.ReadToEnd();
 
-            return source.Equals(destination);
+            return source.Equals(destination, StringComparison.Ordinal);
         }
 
-        private bool AreEqualByBytes(string source, string destination)
+        private static bool AreEqualByBytes(string source, string destination)
         {
             using var firstStream = new FileStream(source, FileMode.Open);
             using var secondStream = new FileStream(destination, FileMode.Open);
@@ -244,7 +243,7 @@ namespace Streams.Tests
             return secondStream.ReadByte() == -1;
         }
 
-        private void CheckFileIsClosed(string fileName)
+        private static void CheckFileIsClosed(string fileName)
         {
             try
             {
