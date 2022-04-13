@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -11,17 +11,20 @@
         <NoWarn>CA1707,S1066,SA1407,SA1600,CS8618,SA1413,SYSLIB0014</NoWarn>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="nunit" Version="3.12.0"/>
-        <PackageReference Include="NUnit3TestAdapter" Version="3.15.1"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0"/>
+        <PackageReference Include="nunit" Version="3.12.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     </ItemGroup>
     <ItemGroup>
-        <AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analisys.ruleset"/>
-        <AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json"/>
+        <AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analisys.ruleset" />
+        <AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
     </ItemGroup>
     <ItemGroup>
+        <None Update="appsettings.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="german_ISO-8859-1.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -42,6 +45,6 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Streams\Streams.csproj"/>
+        <ProjectReference Include="..\Streams\Streams.csproj" />
     </ItemGroup>
 </Project>
