@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 
@@ -107,18 +107,6 @@ namespace Streams
         {
             InputValidation(sourcePath, destinationPath);
 
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Implements the logic of block copying from provided link.
-        /// </summary>
-        /// <param name="link">URI specified as string from which to copy.</param>
-        /// <param name="destinationPath">Path to destination file.</param>
-        /// <returns>Number of copied bytes.</returns>
-        public static int DownloadByBlock(string? link, string? destinationPath)
-        {
-            // TODO: Use WebClient.OpenRead method to create stream.
             throw new NotImplementedException();
         }
 
