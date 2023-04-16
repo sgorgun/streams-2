@@ -8,6 +8,7 @@
     - ReadEncodedText
     - DecompressStream
     - CalculateHash    
+
 The task detail definitions are given in the XML-comments for the methods.
 
 ## See also
