@@ -1,6 +1,6 @@
 # Task Description
 
-- Add implementations to static methods of the class [StreamsExtension](https://gitlab.com/AnzhelikaKravchuk/streams/-/blob/master/Streams/StreamsExtension.cs). 
+- Add implementations to static methods of the class [StreamsExtension](/Streams/StreamsExtension.cs). 
     - ByteCopyWithFileStream
     - BlockCopyWithFileStream
     - BlockCopyWithBufferedStream
