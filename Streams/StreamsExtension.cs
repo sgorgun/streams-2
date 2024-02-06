@@ -73,7 +73,6 @@ namespace Streams
         public static int BlockCopyWithMemoryStream(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-
             using var sourceStream = new FileStream(sourcePath!, FileMode.Open, FileAccess.Read);
             using var destinationStream = new FileStream(destinationPath!, FileMode.Create, FileAccess.Write);
             sourceStream.CopyTo(destinationStream);
@@ -129,19 +128,24 @@ namespace Streams
         public static int LineCopy(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-            int linesCopied = 0;
-            using (var reader = new StreamReader(sourcePath!))
-            using (var writer = new StreamWriter(destinationPath!))
+            using var sourceStream = new FileStream(sourcePath!, FileMode.Open);
+            using var destinationStream = new FileStream(destinationPath!, FileMode.Open);
+            using var source = new StreamReader(sourceStream);
+            using var destination = new StreamWriter(destinationStream, Encoding.UTF8);
+            int count = 0;
+            string? line;
+            while ((line = source.ReadLine()) != null)
             {
-                string? line;
-                while ((line = reader.ReadLine()) != null)
+                if (source.EndOfStream)
                 {
-                    writer.WriteLine(line);
-                    linesCopied++;
+                    break;
                 }
+
+                destination.WriteLine(line);
+                count++;
             }
 
-            return linesCopied;
+            return count;
         }
 
         /// <summary>
