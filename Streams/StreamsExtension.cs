@@ -1,6 +1,9 @@
-using System;
+﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Streams
 {
@@ -20,8 +23,10 @@ namespace Streams
         public static int ByteCopyWithFileStream(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
+            using var sourceStream = File.OpenRead(sourcePath!);
+            using var destinationStream = File.Create(destinationPath!);
+            sourceStream.CopyTo(destinationStream);
+            return (int)sourceStream.Length;
         }
 
         /// <summary>
@@ -35,19 +40,9 @@ namespace Streams
         public static int ByteCopyWithMemoryStream(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-
-            // TODO: step 1. Use StreamReader to read entire file in string
-
-            // TODO: step 2. Create byte array on base string content - use  System.Text.Encoding class
-
-            // TODO: step 3. Use MemoryStream instance to read from byte array (from step 2)
-
-            // TODO: step 4. Use MemoryStream instance (from step 3) to write it content in new byte array
-
-            // TODO: step 5. Use Encoding class instance (from step 2) to create char array on byte array content
-
-            // TODO: step 6. Use StreamWriter here to write char array content in new file
-            throw new NotImplementedException();
+            byte[] sourceData = File.ReadAllBytes(sourcePath!);
+            File.WriteAllBytes(destinationPath!, sourceData);
+            return sourceData.Length;
         }
 
         /// <summary>
@@ -61,8 +56,10 @@ namespace Streams
         public static int BlockCopyWithFileStream(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
+            using var sourceStream = new FileStream(sourcePath!, FileMode.Open, FileAccess.Read);
+            using var destinationStream = new FileStream(destinationPath!, FileMode.Create, FileAccess.Write);
+            sourceStream.CopyTo(destinationStream, 8192);
+            return (int)sourceStream.Length;
         }
 
         /// <summary>
@@ -77,7 +74,10 @@ namespace Streams
         {
             InputValidation(sourcePath, destinationPath);
 
-            throw new NotImplementedException();
+            using var sourceStream = new FileStream(sourcePath!, FileMode.Open, FileAccess.Read);
+            using var destinationStream = new FileStream(destinationPath!, FileMode.Create, FileAccess.Write);
+            sourceStream.CopyTo(destinationStream);
+            return (int)sourceStream.Length;
         }
 
         /// <summary>
@@ -91,8 +91,13 @@ namespace Streams
         public static int BlockCopyWithBufferedStreamForFileStream(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
+            using var sourceStream = File.OpenRead(sourcePath);
+            using var destinationStream = File.Create(destinationPath);
+            using var bufferedSourceStream = new BufferedStream(sourceStream);
+            using var bufferedDestinationStream = new BufferedStream(destinationStream);
+            bufferedSourceStream.CopyTo(bufferedDestinationStream);
+            bufferedDestinationStream.Flush();
+            return (int)sourceStream.Length;
         }
 
         /// <summary>
@@ -106,13 +111,15 @@ namespace Streams
         public static int BlockCopyWithBufferedStreamForMemoryStream(string sourcePath, string destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
-
-            throw new NotImplementedException();
+            using var sourceStream = new BufferedStream(File.OpenRead(sourcePath));
+            using var destinationStream = new BufferedStream(File.Create(destinationPath));
+            sourceStream.CopyTo(destinationStream);
+            return (int)sourceStream.Length;
         }
 
         /// <summary>
         /// Implements the logic of line-by-line copying of the contents of the source text file
-        /// using FileStream and classes-adapters  StreamReader/StreamWriter
+        /// using FileStream and classes-adapters  StreamReader/StreamWriter.
         /// </summary>
         /// <param name="sourcePath">Path to source file.</param>
         /// <param name="destinationPath">Path to destination file.</param>
@@ -122,8 +129,19 @@ namespace Streams
         public static int LineCopy(string? sourcePath, string? destinationPath)
         {
             InputValidation(sourcePath, destinationPath);
+            int linesCopied = 0;
+            using (var reader = new StreamReader(sourcePath!))
+            using (var writer = new StreamWriter(destinationPath!))
+            {
+                string? line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    writer.WriteLine(line);
+                    linesCopied++;
+                }
+            }
 
-            throw new NotImplementedException();
+            return linesCopied;
         }
 
         /// <summary>
@@ -136,9 +154,8 @@ namespace Streams
         /// <exception cref="FileNotFoundException">Throw if source file doesn't exist.</exception>
         public static string ReadEncodedText(string? sourcePath, string? encoding)
         {
-            InputValidation(sourcePath);
-
-            throw new NotImplementedException();
+            InputValidation(sourcePath, encoding);
+            return File.ReadAllText(sourcePath!, Encoding.GetEncoding(encoding!));
         }
 
         /// <summary>
@@ -152,8 +169,14 @@ namespace Streams
         public static Stream DecompressStream(string? sourcePath, DecompressionMethods? method)
         {
             InputValidation(sourcePath);
-
-            throw new NotImplementedException();
+            var sourceStream = File.OpenRead(sourcePath!);
+            return method switch
+            {
+                DecompressionMethods.Deflate => new DeflateStream(sourceStream, CompressionMode.Decompress),
+                DecompressionMethods.GZip => new GZipStream(sourceStream, CompressionMode.Decompress),
+                DecompressionMethods.Brotli => new BrotliStream(sourceStream, CompressionMode.Decompress),
+                _ => sourceStream,
+            };
         }
 
         /// <summary>
@@ -166,7 +189,16 @@ namespace Streams
         /// <returns>Hash.</returns>
         public static string CalculateHash(this Stream? stream, string? hashAlgorithmName)
         {
-            throw new NotImplementedException();
+            if (stream == null || string.IsNullOrWhiteSpace(hashAlgorithmName))
+            {
+                throw new ArgumentException("Stream and hash algorithm name cannot be null or empty.");
+            }
+
+            using var algorithm = HashAlgorithm.Create(hashAlgorithmName)
+                                 ?? throw new ArgumentException($"Unsupported hash algorithm: {hashAlgorithmName}.");
+
+            var hashBytes = algorithm.ComputeHash(stream);
+            return BitConverter.ToString(hashBytes).Replace("-", string.Empty, StringComparison.Ordinal);
         }
 
         private static void InputValidation(string? sourcePath, string? destinationPath)
